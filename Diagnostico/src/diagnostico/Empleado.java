@@ -14,6 +14,7 @@ public class Empleado extends Persona{
     private float salario;
     
     public Empleado(String nombre, String apellido, long id, float salario){
+        this.setTipo("Empleado");
         this.setNombre(nombre);
         this.setApellido(apellido);
         this.setId(id);

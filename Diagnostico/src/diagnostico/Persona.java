@@ -10,6 +10,7 @@ package diagnostico;
  * @author tllach
  */
 public abstract class Persona {
+    private String tipo;
     private String nombre;
     private String apellido;
     private long id;
@@ -36,5 +37,13 @@ public abstract class Persona {
     
     public void setId(long id){
         this.id = id;
+    }
+    
+    public void setTipo(String tipo){
+        this.tipo = tipo;
+    }
+    
+    public String getTipo(){
+        return tipo;
     }
 }

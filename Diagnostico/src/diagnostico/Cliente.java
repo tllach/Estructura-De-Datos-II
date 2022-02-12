@@ -14,13 +14,14 @@ public class Cliente extends Persona {
     private int compras;
     
     public Cliente(String nombre, String apellido, long id, int compras){
+        this.setTipo("Cliente");
         this.setNombre(nombre);
         this.setApellido(apellido);
         this.setId(id);
         this.compras = compras;
     }
     
-    public float getCompras(){
+    public int getCompras(){
         return this.compras;
     }
     

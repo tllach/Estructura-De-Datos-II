@@ -41,7 +41,7 @@ public class ListaEnlazada {
         
         Nodo nodo = ptr;
         
-        for(int j = 0; j < index; j++){
+        for(int j = 0; j <= index; j++){
             nodo = nodo.link;
         }
         
@@ -62,6 +62,7 @@ public class ListaEnlazada {
             System.out.print(current.link.persona.getNombre() +" -> ");
             current = current.link;
         }
+        
         if(current == null)
             System.out.print("null\n");
         

@@ -8,6 +8,9 @@ package diagnostico;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -47,7 +50,7 @@ public class Frame extends javax.swing.JFrame {
         lblTItulo.setForeground(new java.awt.Color(0, 204, 255));
         lblTItulo.setText("Bienvenid@ a tu lista enlazada");
         panel.add(lblTItulo);
-        lblTItulo.setBounds(150, 30, 410, 40);
+        lblTItulo.setBounds(140, 30, 410, 40);
 
         lbl2.setFont(new java.awt.Font("Arial", 0, 22)); // NOI18N
         lbl2.setText("¿Qué Desea Hacer?");
@@ -433,8 +436,8 @@ public class Frame extends javax.swing.JFrame {
         
         showDialog(3);
         try{
-            int indexToSearch = Integer.parseInt(this.indexToSearch);
-            if((0 < indexToSearch) && (indexToSearch < Diagnostico.listaPersonas.getTam())){
+            int indexToSearch = Integer.parseInt(this.indexToSearch) - 1;
+            if(indexToSearch <= Diagnostico.listaPersonas.getTam()){
                 try{
                     empleado = (Empleado) Diagnostico.listaPersonas.obtener(indexToSearch);
                     nombreP = empleado.getNombre();
@@ -508,7 +511,71 @@ public class Frame extends javax.swing.JFrame {
     }
     
     public void runVisualizar(){
+        panel.removeAll();
         
+        createTabla();
+        
+        lblTItulo = new javax.swing.JLabel();
+        lblTItulo.setFont(new java.awt.Font("Book Antiqua", 0, 30));
+        lblTItulo.setForeground(new java.awt.Color(0, 204, 255));
+        lblTItulo.setText("Lista");
+        panel.add(lblTItulo);
+        lblTItulo.setBounds(300, 30, 100, 40);
+        
+        volverBtn = new JButton();
+        panel.add(volverBtn);
+        volverBtn.setText("Volver");
+        volverBtn.setBounds(270, 360, 130, 30);
+        volverBtn.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent evt){
+                runPrincipal();
+            }
+        });
+        
+        agregarDatos();
+        
+        panel.revalidate();
+        panel.repaint();
+    }
+    
+    public void createTabla(){
+        modelTable = new DefaultTableModel(
+                null,
+                new String[]{"Tipo", "Nombre", "Apellido", "ID", ""} 
+        );
+        tableCliente = new JTable(modelTable);
+        scrollPane = new JScrollPane(tableCliente);
+        
+        panel.add(scrollPane);
+        scrollPane.setBounds(100, 90, 520, 250);
+    }
+    
+    public void agregarDatos(){
+        String tipo;
+        String nombre;
+        String apellido;
+        String id;
+        String var;
+        
+        int tam = Diagnostico.listaPersonas.getTam();
+        for(int i = 0; i < tam; i++){
+            Persona p = Diagnostico.listaPersonas.obtener(i);
+            if(p.getTipo() == "Cliente"){
+                Cliente j = (Cliente) p;
+                var = String.valueOf(j.getCompras());
+            }else{
+                Empleado j = (Empleado) p;
+                var = String.valueOf(j.getSalario());
+            }
+            tipo = p.getTipo();
+            nombre = p.getNombre();
+            apellido = p.getApellido();
+            id = String.valueOf(p.getId());
+            Object[] k = new Object[]{tipo, nombre, apellido, id, var};
+            modelTable.addRow(k);
+        }
+
     }
     
     public void agregarPersonas(int i){
@@ -557,5 +624,7 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JLabel lblNameInfo;
     private javax.swing.JLabel lblApellidoInfo;
     private javax.swing.JLabel lblID1Info;
-    
+    private JTable tableCliente;
+    private DefaultTableModel modelTable;
+    private JScrollPane scrollPane;
 }
